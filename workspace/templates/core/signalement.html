@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% block title %}Signaler un dépôt{% endblock %}
+{% block content %}
+{% include "core/_phead.html" with eyebrow="Signalement" title="Signaler un dépôt de déchets" lead="Votre signalement est suivi par statut." %}
+<div class="wrap" style="padding-bottom:70px"><div class="two"><form method="post" class="form">{% csrf_token %}{% include "core/_fields.html" %}<button class="btn btn-main">Envoyer le signalement</button></form>
+<div class="panel"><b>Mes signalements</b>{% if not signalements %}<p class="sub">Aucun signalement.</p>{% endif %}
+{% for r in signalements %}<div class="row"><span class="pill">{{ r.get_statut_display }}</span> <span style="color:var(--mute);font-size:.8rem">{{ r.created_at|date:"d/m/Y" }}</span><br>{{ r.description|truncatechars:120 }}<br><small style="color:var(--mute)">{{ r.localisation }}</small></div>{% endfor %}</div></div></div>
+{% endblock %}

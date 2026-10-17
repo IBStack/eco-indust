@@ -1,0 +1,10 @@
+{% extends "base.html" %}{% load core_extras %}
+{% block title %}Points de collecte{% endblock %}
+{% block content %}
+{% include "core/_phead.html" with eyebrow="Collecte" title="Points de collecte" lead="Adresses et horaires quand ils sont connus." %}
+<div class="wrap" style="padding-bottom:70px"><form method="get" style="max-width:320px"><label for="quartier" style="color:var(--mute);font-size:.88rem">Filtrer par quartier</label><select id="quartier" name="quartier" onchange="this.form.submit()"><option value="">Tous les quartiers</option>
+{% for x in quartiers %}<option {% if x == quartier %}selected{% endif %}>{{ x }}</option>{% endfor %}</select></form>
+<div class="cards">{% for p in points %}<article class="card c2"><div class="ic">{% icon 'pin' %}</div><h3>{{ p.nom }}</h3><p>{{ p.quartier }} · {{ p.adresse }}<br>{{ p.description }}<br><b style="color:var(--ink)">{{ p.horaires }}</b></p>
+<a class="more" href="https://www.google.com/maps/search/?api=1&amp;query={{ p.adresse|default:p.nom|add:' Garoua'|urlencode }}" target="_blank" rel="noopener">{% icon 'pin' %} Itinéraire</a></article>{% endfor %}</div>
+{% if not points %}<p class="sub">Aucun point de collecte pour ce quartier.</p>{% endif %}</div>
+{% endblock %}

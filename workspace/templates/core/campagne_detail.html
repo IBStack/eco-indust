@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}{{ c.titre }}{% endblock %}
+{% block content %}
+<div class="wrap page"><h1>{{ c.titre }}</h1>
+<p class="sub">{{ c.date_debut|date:"d/m/Y H:i" }} – {{ c.lieu }}</p>
+<p style="margin-top:20px;max-width:60ch">{{ c.description|linebreaksbr }}</p>
+<p class="sub">Places : {{ c.inscrits }} / {{ c.capacite }}</p>
+{% if c.complet %}<p class="msg err">Cette campagne est complète ou fermée.</p>
+{% elif not user.is_authenticated %}<a class="btn btn-main" style="margin-top:20px" href="{% url 'login' %}?next={{ request.path }}">Connectez-vous pour vous inscrire</a>
+{% else %}<form method="post">{% csrf_token %}<button class="btn btn-main" style="margin-top:20px;cursor:pointer">S'inscrire</button></form>{% endif %}</div>
+{% endblock %}

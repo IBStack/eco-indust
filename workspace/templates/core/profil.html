@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Mon espace{% endblock %}
+{% block content %}
+{% with greeting="Bonjour "|add:user.nom %}{% include "core/_phead.html" with eyebrow="Mon espace" title=greeting %}{% endwith %}
+<div class="wrap" style="padding-bottom:70px"><div class="cta" style="margin-bottom:28px"><a class="btn btn-main" href="{% url 'campagnes' %}">Voir les campagnes</a><a class="btn btn-ghost" href="{% url 'signalement' %}">Signaler un dépôt</a><a class="btn btn-ghost" href="{% url 'initiatives' %}">Proposer une initiative</a></div>
+<div class="panel"><b>Mes inscriptions</b>{% if not inscriptions %}<p class="sub">Aucune inscription.</p>{% else %}<div class="tbl"><table><tr><th>Campagne</th><th>Date</th><th>Lieu</th><th></th></tr>
+{% for r in inscriptions %}<tr><td data-th="Campagne">{{ r.campagne.titre }}</td><td data-th="Date">{{ r.campagne.date_debut|date:"d/m/Y H:i" }}</td><td data-th="Lieu">{{ r.campagne.lieu }}</td><td data-th=""><form method="post" style="display:inline">{% csrf_token %}<input type="hidden" name="action" value="annuler"><input type="hidden" name="id" value="{{ r.pk }}"><button class="link danger">Annuler l'inscription</button></form></td></tr>{% endfor %}</table></div>{% endif %}</div>
+<div class="two"><form method="post" class="form" style="max-width:none">{% csrf_token %}<input type="hidden" name="action" value="maj"><h3 style="margin-top:20px">Mon profil</h3>{% include "core/_fields.html" with form=forms.maj %}<button class="btn btn-main">Enregistrer</button></form>
+<form method="post" class="form" style="max-width:none">{% csrf_token %}<input type="hidden" name="action" value="mdp"><h3 style="margin-top:20px">Mot de passe</h3>{% include "core/_fields.html" with form=forms.mdp %}<button class="btn btn-main">Modifier</button></form></div>
+{% if not user.is_staff %}<form method="post" class="form dangerzone" style="max-width:none" onsubmit="return confirm('Supprimer définitivement votre compte ?')">{% csrf_token %}<input type="hidden" name="action" value="supprimer"><h3 style="margin-top:20px">Supprimer mon compte</h3><p class="sub">Vos inscriptions, signalements et initiatives seront supprimés.</p>{% include "core/_fields.html" with form=forms.supprimer %}<button class="btn danger">Supprimer mon compte</button></form>{% endif %}</div>
+{% endblock %}

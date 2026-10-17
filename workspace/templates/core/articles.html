@@ -1,0 +1,9 @@
+{% extends "base.html" %}{% load core_extras %}
+{% block title %}{{ titre }}{% endblock %}
+{% block content %}
+{% include "core/_phead.html" with eyebrow="Apprendre" title=titre lead=sous_titre %}
+<div class="wrap" style="padding-bottom:70px"><div class="tabs">
+{% for key, label, urlname in tabs %}<a class="{% if key == cat %}on{% endif %}" href="{% url urlname %}">{{ label }}</a>{% endfor %}</div>
+{% if effets %}{% include "core/_effets.html" %}{% endif %}
+<div class="cards">{% for a in articles %}<article class="card"><h3>{{ a.titre }}</h3><p>{{ a.contenu|truncatechars:120 }}</p><a class="more" href="{% url 'article' a.pk %}">Lire {% icon 'arrow' %}</a></article>{% endfor %}</div></div>
+{% endblock %}

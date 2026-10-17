@@ -1,0 +1,8 @@
+{% extends "base.html" %}{% load core_extras %}
+{% block title %}À propos{% endblock %}
+{% block content %}
+{% include "core/_phead.html" with eyebrow="À propos" title="À propos d'EcoIndustrial" lead=site.slogan %}
+<div class="wrap" style="padding-bottom:70px"><div class="two"><div><h2 class="t" style="margin-top:0">Notre mission</h2><p class="sub">{{ site.apropos|linebreaksbr }}</p>
+<a class="btn btn-main" style="margin-top:22px" href="{% url 'contact' %}">Nous contacter {% icon 'arrow' %}</a></div>
+<div class="panel"><b>Ce que propose le site</b><ul class="checks">{% for o in objectifs %}<li>{% icon 'check' %} {{ o }}</li>{% endfor %}</ul></div></div></div>
+{% endblock %}

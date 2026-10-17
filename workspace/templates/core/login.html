@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+{% block title %}Connexion{% endblock %}
+{% block content %}
+<div class="wrap page"><h1>Connexion</h1><form method="post" class="form">{% csrf_token %}<input type="hidden" name="next" value="{{ next }}">{% include "core/_fields.html" %}<button class="btn btn-main">Se connecter</button></form>
+<p class="sub">Pas de compte ? <a href="{% url 'inscription' %}" style="color:var(--lime)">Créer un compte</a></p></div>
+{% endblock %}

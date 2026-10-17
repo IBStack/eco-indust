@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block title %}Contact{% endblock %}
+{% block content %}
+<div class="wrap page"><h1>Contact</h1><form method="post" class="form">{% csrf_token %}{% include "core/_fields.html" %}<button class="btn btn-main">Envoyer</button></form></div>
+{% endblock %}

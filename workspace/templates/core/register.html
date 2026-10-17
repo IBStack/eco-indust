@@ -1,0 +1,5 @@
+{% extends "base.html" %}
+{% block title %}Créer un compte{% endblock %}
+{% block content %}
+<div class="wrap page"><h1>Créer un compte</h1><form method="post" class="form">{% csrf_token %}{% include "core/_fields.html" %}<button class="btn btn-main">Créer mon compte</button></form></div>
+{% endblock %}

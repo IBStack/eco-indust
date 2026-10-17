@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Initiatives{% endblock %}
+{% block content %}
+{% include "core/_phead.html" with eyebrow="Initiatives" title="Initiatives environnementales" lead="Proposez une idée ; elle est publiée après validation." %}
+<div class="wrap" style="padding-bottom:70px"><div class="two"><div>
+{% if user.is_authenticated %}<form method="post" class="form" style="margin-top:0">{% csrf_token %}{% include "core/_fields.html" %}<button class="btn btn-main">Proposer</button></form>
+{% if mine %}<div class="panel" style="margin-top:18px"><b>Mes propositions</b>{% for r in mine %}<div class="row">{{ r.titre }} <span class="pill">{{ r.get_statut_display }}</span></div>{% endfor %}</div>{% endif %}
+{% else %}<p class="sub">Connectez-vous pour proposer une initiative.</p><a class="btn btn-main" style="margin-top:16px" href="{% url 'login' %}?next={{ request.path }}">Connexion</a>{% endif %}</div>
+<div class="panel"><b>Initiatives validées</b>{% if not publiees %}<p class="sub">Aucune initiative publiée pour le moment.</p>{% endif %}
+{% for r in publiees %}<div class="row"><b>{{ r.titre }}</b><br>{{ r.description }}<br><small style="color:var(--mute)">par {{ r.user.nom }}</small></div>{% endfor %}</div></div></div>
+{% endblock %}

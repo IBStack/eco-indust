@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Campagnes{% endblock %}
+{% block content %}
+{% include "core/_phead.html" with eyebrow="Campagnes" title="Campagnes de nettoyage" lead="Choisissez une opération et inscrivez-vous en quelques clics." %}
+<div class="wrap" style="padding-bottom:70px"><div class="tabs" style="margin-bottom:22px">
+<a class="{% if not lieu %}on{% endif %}" href="{% url 'campagnes' %}">Tous les lieux</a>
+{% for l in lieux %}<a class="{% if lieu == l %}on{% endif %}" href="{% url 'campagnes' %}?lieu={{ l|urlencode }}">{{ l }}</a>{% endfor %}</div>
+<div class="cards" style="margin-top:0">{% for c in campagnes %}{% include "core/_campcard.html" %}{% endfor %}</div>
+{% if not campagnes %}<p class="sub">Aucune campagne pour ce lieu pour le moment.</p>{% endif %}</div>
+{% endblock %}

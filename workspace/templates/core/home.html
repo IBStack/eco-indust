@@ -1,0 +1,52 @@
+{% extends "base.html" %}{% load static core_extras %}
+{% block title %}Accueil{% endblock %}
+{% block content %}
+<div class="hero {% if hero %}has-img{% endif %}" {% if hero %}style="--hero:url({% static 'img/hero.jpg' %})"{% endif %}>
+<svg class="scene" viewBox="0 0 1440 600" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+<path d="M0 330C240 270 430 360 710 300S1190 240 1440 320V600H0Z" fill="#0e3d27"/><path d="M0 340C240 285 430 372 710 315S1190 258 1440 332" fill="none" stroke="#1e6a45" stroke-width="2" opacity=".6"/>
+<path d="M0 420C260 365 520 450 820 395S1240 365 1440 420V600H0Z" fill="#0a2f1e"/><path d="M0 432C260 378 520 462 820 408S1240 378 1440 432" fill="none" stroke="#18583a" stroke-width="2" opacity=".6"/>
+<path d="M0 505C300 465 600 535 900 495S1300 475 1440 515V600H0Z" fill="#06200f"/></svg>
+<div class="wrap"><div class="hero-grid"><div>
+<span class="eyebrow">{% icon 'leaf' %} Garoua, Cameroun</span>
+<h1>Transformons les déchets<span>en valeur.</span></h1>
+<p class="lead">EcoIndustrial réunit information, campagnes de nettoyage et points de collecte de bouteilles plastiques, pour agir ensemble à Garoua.</p>
+<div class="cta"><a class="btn btn-main" href="{% url 'campagnes' %}">Rejoindre une campagne {% icon 'arrow' %}</a><a class="btn btn-ghost" href="{% url 'points' %}">{% icon 'pin' %} Points de collecte</a></div></div>
+<aside class="glass" aria-label="Prochaine campagne">
+{% if prochaine %}<span class="live">Prochaine campagne</span><h2>{{ prochaine.titre }}</h2><p>{% icon 'pin' %} {{ prochaine.lieu }} · {{ prochaine.date_debut|date:"d/m/Y H:i" }}</p>
+<div class="meta"><span>Places prises</span><span>{{ prochaine.inscrits }} / {{ prochaine.capacite }}</span></div>
+<div class="bar" role="progressbar" aria-valuenow="{{ prochaine.pct }}" aria-valuemin="0" aria-valuemax="100"><i style="width:{{ prochaine.pct }}%"></i></div>
+<a class="btn btn-main" href="{% url 'campagne' prochaine.pk %}">Voir et s'inscrire</a>
+{% else %}<span class="live">Campagnes</span><h2>Aucune campagne ouverte</h2><p>Revenez bientôt.</p>{% endif %}</aside></div>
+<div class="strip" aria-label="Nos missions">
+<div>{% icon 'book' %}<span><b>Informer</b><small>sur la pollution plastique</small></span></div>
+<div>{% icon 'users' %}<span><b>Mobiliser</b><small>autour des campagnes</small></span></div>
+<div>{% icon 'pin' %}<span><b>Collecter</b><small>les bouteilles plastiques</small></span></div>
+<div>{% icon 'recycle' %}<span><b>Valoriser</b><small>l'économie circulaire</small></span></div></div></div></div>
+
+<section><div class="wrap"><span class="eyebrow">Ce que nous faisons</span><h2 class="t">Des outils simples pour agir près de chez vous</h2>
+<p class="sub">De l'information fiable à la participation concrète, tout se fait au même endroit.</p>
+<div class="cards">
+<article class="card c1"><div class="ic">{% icon 'flag' %}</div><h3>Campagnes de nettoyage</h3><p>Inscrivez-vous en ligne et suivez vos participations.</p><a class="more" href="{% url 'campagnes' %}">{% icon 'arrow' %} Voir</a></article>
+<article class="card c2"><div class="ic">{% icon 'recycle' %}</div><h3>Points de collecte</h3><p>Trouvez où déposer vos bouteilles plastiques propres.</p><a class="more" href="{% url 'points' %}">{% icon 'arrow' %} Voir</a></article>
+<article class="card c3"><div class="ic">{% icon 'pin' %}</div><h3>Signaler un dépôt</h3><p>Décrivez un dépôt de déchets et suivez son traitement.</p><a class="more" href="{% url 'signalement' %}">{% icon 'arrow' %} Signaler</a></article>
+<article class="card c4"><div class="ic">{% icon 'book' %}</div><h3>Comprendre et trier</h3><p>Conseils pratiques sur le tri et l'économie circulaire.</p><a class="more" href="{% url 'conseils' %}">{% icon 'arrow' %} Lire</a></article></div></div></section>
+
+<section class="alt"><div class="wrap split"><div><span class="eyebrow">Suivi en direct</span><h2 class="t">Chaque campagne, ses places, en temps réel</h2>
+<p class="sub">Les inscriptions sont enregistrées dans la base de données et une campagne se ferme automatiquement quand elle est complète.</p>
+<ul class="checks"><li>{% icon 'check' %} Inscription en ligne, doublons refusés</li><li>{% icon 'check' %} Capacité maximale par campagne</li><li>{% icon 'check' %} Espace membre pour gérer ses inscriptions</li><li>{% icon 'check' %} Espace administrateur sécurisé</li></ul>
+<a class="btn btn-main" href="{% url 'inscription' %}">Créer un compte {% icon 'arrow' %}</a></div>
+<div class="panel"><b>Aperçu des campagnes</b>{% for k in camps %}<div class="row"><div class="meta" style="margin:0 0 8px"><b style="color:var(--ink)">{{ k.titre }}</b><span>{{ k.inscrits }} / {{ k.capacite }}</span></div><div class="bar"><i style="width:{{ k.pct }}%"></i></div></div>{% endfor %}</div></div></section>
+
+<section><div class="wrap"><span class="eyebrow">Le problème</span><h2 class="t">Pourquoi agir contre les déchets plastiques ?</h2><p class="sub">Constats généraux décrits par les organismes environnementaux.</p>{% include "core/_effets.html" %}</div></section>
+
+<section class="alt"><div class="wrap"><span class="eyebrow">Comment ça marche</span><h2 class="t">Agir en trois étapes</h2>
+<div class="steps"><div class="step"><h3>Créez votre compte</h3><p>Inscription gratuite avec votre e-mail.</p></div><div class="step"><h3>Choisissez une campagne</h3><p>Consultez les dates, lieux et places restantes.</p></div><div class="step"><h3>Participez et recyclez</h3><p>Déposez vos bouteilles dans un point de collecte.</p></div></div></div></section>
+
+<section><div class="wrap"><div class="split"><div><span class="eyebrow">Collecte</span><h2 class="t">Où déposer vos bouteilles ?</h2><p class="sub">Adresses et horaires quand ils sont connus.</p><a class="btn btn-main" style="margin-top:22px" href="{% url 'points' %}">Tous les points {% icon 'arrow' %}</a></div>
+<div class="pts" style="margin:0">{% for p in points %}<div class="pt"><div class="ic">{% icon 'pin' %}</div><div><b>{{ p.nom }}</b><span>{{ p.adresse }} · {{ p.horaires }}</span></div></div>{% endfor %}</div></div></div></section>
+
+<section class="alt"><div class="wrap"><span class="eyebrow">Actualités</span><h2 class="t">Dernières nouvelles</h2><div class="cards">
+{% for a in actus %}<article class="card"><h3>{{ a.titre }}</h3><p>{{ a.contenu|truncatechars:110 }}</p><a class="more" href="{% url 'article' a.pk %}">Lire {% icon 'arrow' %}</a></article>{% endfor %}</div></div></section>
+
+<section style="padding-top:0"><div class="wrap"><div class="band"><div><h2>Un quartier plus propre commence par un geste.</h2><p>Rejoignez le mouvement et participez à la prochaine campagne.</p></div><a class="btn btn-main" href="{% url 'inscription' %}">Rejoindre EcoIndustrial {% icon 'arrow' %}</a></div></div></section>
+{% endblock %}
