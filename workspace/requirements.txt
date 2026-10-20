@@ -1,3 +1,4 @@
 Django>=5.0,<6.0
 # Optionnel si vous gardez MySQL (XAMPP/WAMP) :
-# mysqlclient>=2.2
+mysqlclient>=2.2
+whitenoise = 6.9.0
